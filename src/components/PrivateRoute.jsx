@@ -3,6 +3,6 @@ import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../redux/auth/selectors";
 
 export function PrivateRoute({ Component, redirectPath }) {
-  const isLoggedIn = trueuseSelector(selectIsLoggedIn);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   return isLoggedIn ? Component : <Navigate to={redirectPath} />;
 }
