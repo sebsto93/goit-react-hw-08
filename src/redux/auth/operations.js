@@ -15,14 +15,11 @@ export const register = createAsyncThunk(
   "auth/register",
   async ({ name, email, password }, thunkApi) => {
     try {
-      const response = await axios.post(
-        "https://connections-api.goit.global/users/signup",
-        {
-          name,
-          email,
-          password,
-        }
-      );
+      const response = await axios.post("/users/signup", {
+        name,
+        email,
+        password,
+      });
       return response.data;
     } catch (err) {
       console.error(
@@ -44,17 +41,36 @@ export const logIn = createAsyncThunk(
       setAuthHeader(response.data.token);
       return response.data;
     } catch (err) {
-      console.log("Error logging in:", err.response.data);
-      return thunkApi.rejectWithValue(err.message);
+      console.log(
+        "Error logging in:",
+        err.response ? err.response.data : err.message
+      );
+      return thunkApi.rejectWithValue(
+        err.response ? err.response.data : err.message
+      );
     }
   }
 );
 
 export const logOut = createAsyncThunk("auth/logOut", async (_, thunkApi) => {
+  const state = thunkApi.getState();
+  const token = state.auth.token;
+
+  if (!token) {
+    return thunkApi.rejectWithValue("No token found");
+  }
+
+  setAuthHeader(token);
   try {
     await axios.post("/users/logout");
     clearAuthHeader();
   } catch (err) {
-    return thunkApi.rejectWithValue(err.message);
+    console.error(
+      "Error logging out:",
+      err.response ? err.response.data : err.message
+    );
+    return thunkApi.rejectWithValue(
+      err.response ? err.response.data : err.message
+    );
   }
 });
