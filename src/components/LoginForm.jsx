@@ -8,6 +8,9 @@ export default function LoginForm() {
     const form = e.target;
     const email = form.elements.email.value;
     const password = form.elements.password.value;
+
+    console.log("Logging in with:", { email, password });
+
     dispatch(
       logIn({
         email,
@@ -17,15 +20,16 @@ export default function LoginForm() {
 
     form.reset();
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <label>
         email
-        <input type="email" name="email" />
+        <input type="email" name="email" required />
       </label>
       <label>
         password
-        <input type="password" name="password" />
+        <input type="password" name="password" required />{" "}
       </label>
       <button type="submit">Login</button>
     </form>
