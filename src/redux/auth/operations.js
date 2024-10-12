@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-axios.defaults.baseURL = "https://task-menager-api.goit.global/";
+axios.defaults.baseURL = "https://connections-api.goit.global/";
 
 const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = "Bearer ${toekn}";
@@ -19,6 +19,7 @@ export const logIn = createAsyncThunk(
       setAuthHeader(respons.data.token);
       return respons.data;
     } catch (err) {
+      console.log("Error logging in:", err.response.data);
       return thunkApi.rejectWithValue(err.message);
     }
   }
