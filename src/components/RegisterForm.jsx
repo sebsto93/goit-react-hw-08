@@ -36,7 +36,7 @@ export default function RegisterForm() {
         password
         <input type="password" name="password" required />
       </label>
-      <button type="submit">Login</button>
+      <button type="submit">Register</button>
     </form>
   );
 }

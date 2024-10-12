@@ -13,14 +13,25 @@ const clearAuthHeader = () => {
 
 export const register = createAsyncThunk(
   "auth/register",
-  async (credentials, thunkApi) => {
+  async ({ name, email, password }, thunkApi) => {
     try {
-      const response = await axios.post("/users/signup", credentials);
-      setAuthHeader(response.data.token);
+      const response = await axios.post(
+        "https://connections-api.goit.global/users/signup",
+        {
+          name,
+          email,
+          password,
+        }
+      );
       return response.data;
     } catch (err) {
-      console.log("Error logging in:", err.response.data);
-      return thunkApi.rejectWithValue(err.message);
+      console.error(
+        "Error during registration:",
+        err.response ? err.response.data : err.message
+      );
+      return thunkApi.rejectWithValue(
+        err.response ? err.response.data : err.message
+      );
     }
   }
 );
