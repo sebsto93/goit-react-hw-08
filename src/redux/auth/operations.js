@@ -20,6 +20,7 @@ export const register = createAsyncThunk(
         email,
         password,
       });
+      setAuthHeader(res.data.token);
       return response.data;
     } catch (err) {
       console.error(
@@ -74,3 +75,24 @@ export const logOut = createAsyncThunk("auth/logOut", async (_, thunkApi) => {
     );
   }
 });
+
+export const refreshUser = createAsyncThunk(
+  "auth/refreshUser",
+  async (_, thunkAPI) => {
+    const persistToken = thunkAPI.getState().auth.token;
+
+    if (!persistToken) {
+      return thunkAPI.rejectWithValue("No token available");
+    }
+    try {
+      setAuthHeader(persistToken);
+      const response = await axios.get("/users/current");
+      return response.data;
+    } catch (e) {
+      if (e.response && e.response.status === 401) {
+        clearAuthHeader();
+        return thunkAPI.rejectWithValue(e.message);
+      }
+    }
+  }
+);
