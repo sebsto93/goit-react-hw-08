@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Fuse from "fuse.js";
+import Modal from "react-modal";
 import {
   deleteContact,
   fetchContacts,
@@ -11,11 +12,16 @@ import ContactItem from "../../components/ContactItem";
 import ContactForm from "../../components/ContactForm/ContactForm";
 import ContactList from "../../components/ContactList/ContactList";
 import SearchBox from "../../components/SearchBox/SearchBox";
+import "../../modalStyles.css";
+
+Modal.setAppElement("#root");
 
 export default function ContactPage() {
   const contacts = useSelector(selectFilteredContacts);
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [contactToDelete, setContactToDelete] = useState(null);
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -23,6 +29,7 @@ export default function ContactPage() {
 
   const handleDelete = (id) => {
     dispatch(deleteContact(id));
+    closeModal();
   };
 
   const handleAddContact = (name, number) => {
@@ -42,19 +49,38 @@ export default function ContactPage() {
     ? fuse.search(searchTerm).map(({ item }) => item)
     : contacts;
 
+  const openModal = (contact) => {
+    setContactToDelete(contact);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setContactToDelete(null);
+  };
+
   return (
     <div>
       <h2>Contact List</h2>
       <ContactForm onAddContact={handleAddContact} />
       <SearchBox value={searchTerm} onChange={handleSearchChange} />
       {filteredContacts.length > 0 ? (
-        <ContactList
-          contacts={filteredContacts}
-          onDeleteContact={handleDelete}
-        />
+        <ContactList contacts={filteredContacts} onDeleteContact={openModal} />
       ) : (
         <p>No contacts found.</p>
       )}
+
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        className="ReactModal__Content"
+        overlayClassName="ReactModal__Overlay"
+      >
+        <h2>Confirm Deletion</h2>
+        <p>Are you sure you want to delete {contactToDelete?.name}?</p>
+        <button onClick={() => handleDelete(contactToDelete.id)}>Yes</button>
+        <button onClick={closeModal}>No</button>
+      </Modal>
     </div>
   );
 }
