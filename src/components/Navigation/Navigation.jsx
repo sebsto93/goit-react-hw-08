@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import AuthNav from "./AuthNav";
-import UserNav from "./UserNav";
+import AuthNav from "../AuthNav/AuthNav";
+import UserNav from "../UserNav";
 import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../redux/auth/selectors";
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
+import ContactItem from "../ContactItem";
 
 export default function Navigation() {
   const isLoggedIn = useSelector(selectIsLoggedIn);

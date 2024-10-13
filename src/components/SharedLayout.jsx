@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import Navigation from "./Navigation";
+import Navigation from "./Navigation/Navigation";
 
 export default function SharedLayout({ children }) {
   return (
