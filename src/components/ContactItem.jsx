@@ -3,7 +3,7 @@ import styles from "./ContactItem.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faPhone } from "@fortawesome/free-solid-svg-icons";
 
-const Contact = ({ contact, onDelete }) => {
+const Contact = ({ contact, onDelete, onEdit }) => {
   return (
     <div className={styles.contactItem}>
       <div className={styles.contactInfo}>
@@ -14,6 +14,9 @@ const Contact = ({ contact, onDelete }) => {
           <FontAwesomeIcon icon={faPhone} /> {contact.number}
         </span>
       </div>
+      <button onClick={onEdit} className={styles.editButton}>
+        Edit
+      </button>
       <button onClick={onDelete} className={styles.deleteButton}>
         Delete
       </button>

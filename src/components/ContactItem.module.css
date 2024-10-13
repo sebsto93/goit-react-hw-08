@@ -3,13 +3,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  border: 2px solid black; 
+  border: 2px solid black;
   border-radius: 5px;
   width: 200px;
-  background-color: #ffffff; 
+  background-color: #ffffff;
 }
 
-.contactInfo{
+.contactInfo {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -23,9 +23,16 @@
 }
 
 .deleteButton:hover {
-  background-color: #fa5555; 
+  background-color: #fa5555;
 }
 
+.editButton {
+  padding: 5px 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-
-
+.editButton:hover {
+  background-color: #fa5555;
+}

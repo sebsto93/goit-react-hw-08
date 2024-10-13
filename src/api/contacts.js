@@ -15,3 +15,17 @@ export const addContact = async (contact) => {
 export const deleteContact = async (id) => {
   await axios.delete(`${API_URL}/${id}`);
 };
+
+export const updateContact = async (id, updatedContact) => {
+  const response = await fetch(
+    `https://6702aac8bd7c8c1ccd3f8435.mockapi.io/contacts/${id}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedContact),
+    }
+  );
+  return response.json();
+};

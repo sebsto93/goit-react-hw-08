@@ -14,6 +14,7 @@ import ContactList from "../../components/ContactList/ContactList";
 import SearchBox from "../../components/SearchBox/SearchBox";
 import "../../modalStyles.css";
 import { toast } from "react-hot-toast";
+import EditContactForm from "../../components/EditContactForm/EditContactForm";
 
 Modal.setAppElement("#root");
 
@@ -23,6 +24,8 @@ export default function ContactPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contactToDelete, setContactToDelete] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [contactToEdit, setContactToEdit] = useState(null);
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -70,13 +73,27 @@ export default function ContactPage() {
     setContactToDelete(null);
   };
 
+  const openEditModal = (contact) => {
+    setContactToEdit(contact);
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setContactToEdit(null);
+  };
+
   return (
     <div>
       <h2>Contact List</h2>
       <ContactForm onAddContact={handleAddContact} />
       <SearchBox value={searchTerm} onChange={handleSearchChange} />
       {filteredContacts.length > 0 ? (
-        <ContactList contacts={filteredContacts} onDeleteContact={openModal} />
+        <ContactList
+          contacts={filteredContacts}
+          onDeleteContact={openModal}
+          onEditContact={openEditModal}
+        />
       ) : (
         <p>No contacts found.</p>
       )}
@@ -91,6 +108,17 @@ export default function ContactPage() {
         <p>Are you sure you want to delete {contactToDelete?.name}?</p>
         <button onClick={() => handleDelete(contactToDelete.id)}>Yes</button>
         <button onClick={closeModal}>No</button>
+      </Modal>
+
+      <Modal
+        isOpen={isEditModalOpen}
+        onRequestClose={closeEditModal}
+        className="ReactModal__Content"
+        overlayClassName="ReactModal__Overlay"
+      >
+        {contactToEdit && (
+          <EditContactForm contact={contactToEdit} onClose={closeEditModal} />
+        )}
       </Modal>
     </div>
   );
