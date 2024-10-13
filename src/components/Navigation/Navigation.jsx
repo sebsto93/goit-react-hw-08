@@ -4,13 +4,20 @@ import UserNav from "../UserNav";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import ContactItem from "../ContactItem";
+import css from "./Navigation.module.css";
 
 export default function Navigation() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   return (
     <nav>
-      <Link to="/">Home</Link>
-      {isLoggedIn && <Link to="/contacts">Contacts</Link>}
+      <Link className={css.link} to="/">
+        Home
+      </Link>
+      {isLoggedIn && (
+        <Link className={css.link} to="/contacts">
+          Contacts
+        </Link>
+      )}
       {isLoggedIn ? <UserNav /> : <AuthNav />}
     </nav>
   );
