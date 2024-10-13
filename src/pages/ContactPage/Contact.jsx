@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import Fuse from "fuse.js";
 import {
   deleteContact,
   fetchContacts,
@@ -32,18 +33,14 @@ export default function ContactPage() {
     setSearchTerm(e.target.value);
   };
 
-  const filteredContacts = contacts.filter((contact) => {
-    const nameMatch =
-      contact.name &&
-      contact.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const numberMatch =
-      contact.number &&
-      contact.number
-        .replace(/[\s-]/g, "")
-        .includes(searchTerm.replace(/[\s-]/g, ""));
-
-    return nameMatch || numberMatch;
+  const fuse = new Fuse(contacts, {
+    keys: ["name", "number"],
+    threshold: 0.3,
   });
+
+  const filteredContacts = searchTerm
+    ? fuse.search(searchTerm).map(({ item }) => item)
+    : contacts;
 
   return (
     <div>
