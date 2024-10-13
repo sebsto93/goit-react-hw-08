@@ -1,13 +1,26 @@
-.link {
-  display: inline-block;
-  text-decoration: none;
-  padding: 12px;
-  font-weight: 700;
-  color: #2a363b;
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 2px solid black;
 }
 
-.link.active {
-  color: #e84a5f;
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  margin-right: 15px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
 }
 
 .link:hover {

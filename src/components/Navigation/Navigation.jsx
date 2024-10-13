@@ -9,16 +9,18 @@ import css from "./Navigation.module.css";
 export default function Navigation() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   return (
-    <nav>
-      <Link className={css.link} to="/">
-        Home
-      </Link>
-      {isLoggedIn && (
-        <Link className={css.link} to="/contacts">
-          Contacts
+    <nav className={css.nav}>
+      <div className={css.left}>
+        <Link className={css.link} to="/">
+          Home
         </Link>
-      )}
-      {isLoggedIn ? <UserNav /> : <AuthNav />}
+        {isLoggedIn && (
+          <Link className={css.link} to="/contacts">
+            Contacts
+          </Link>
+        )}
+      </div>
+      <div className={css.right}>{isLoggedIn ? <UserNav /> : <AuthNav />}</div>
     </nav>
   );
 }
