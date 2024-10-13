@@ -32,9 +32,18 @@ export default function ContactPage() {
     setSearchTerm(e.target.value);
   };
 
-  const filteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredContacts = contacts.filter((contact) => {
+    const nameMatch =
+      contact.name &&
+      contact.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const numberMatch =
+      contact.number &&
+      contact.number
+        .replace(/[\s-]/g, "")
+        .includes(searchTerm.replace(/[\s-]/g, ""));
+
+    return nameMatch || numberMatch;
+  });
 
   return (
     <div>
