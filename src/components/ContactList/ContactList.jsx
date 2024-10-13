@@ -9,7 +9,7 @@ const ContactList = ({ contacts, onDeleteContact }) => {
         <Contact
           key={contact.id}
           contact={contact}
-          onDelete={() => onDeleteContact(contact.id)}
+          onDelete={() => onDeleteContact(contact)}
         />
       ))}
     </div>

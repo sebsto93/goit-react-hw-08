@@ -13,6 +13,7 @@ import ContactForm from "../../components/ContactForm/ContactForm";
 import ContactList from "../../components/ContactList/ContactList";
 import SearchBox from "../../components/SearchBox/SearchBox";
 import "../../modalStyles.css";
+import { toast } from "react-hot-toast";
 
 Modal.setAppElement("#root");
 
@@ -28,12 +29,19 @@ export default function ContactPage() {
   }, [dispatch]);
 
   const handleDelete = (id) => {
-    dispatch(deleteContact(id));
-    closeModal();
+    console.log("Attempting to delete contact with ID:", id);
+    if (id) {
+      dispatch(deleteContact(id));
+      closeModal();
+      toast.success("Contact deleted!");
+    } else {
+      toast.error("Contact not found!");
+    }
   };
 
   const handleAddContact = (name, number) => {
     dispatch(addContact({ name, number }));
+    toast.success("Contact add!");
   };
 
   const handleSearchChange = (e) => {
@@ -50,8 +58,11 @@ export default function ContactPage() {
     : contacts;
 
   const openModal = (contact) => {
-    setContactToDelete(contact);
-    setIsModalOpen(true);
+    console.log("Opening modal for contact:", contact);
+    if (contact) {
+      setContactToDelete(contact);
+      setIsModalOpen(true);
+    }
   };
 
   const closeModal = () => {

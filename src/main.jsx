@@ -6,11 +6,13 @@ import App from "./App";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { StrictMode } from "react";
+import { Toaster } from "react-hot-toast";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Provider store={store}>
       <StrictMode>
+        <Toaster />
         <App />
       </StrictMode>
     </Provider>

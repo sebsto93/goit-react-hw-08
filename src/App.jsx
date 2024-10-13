@@ -17,6 +17,7 @@ import SharedLayout from "./components/SharedLayout";
 import { lazy } from "react";
 import { RestrictedRoute } from "./components/RestrictedRoute";
 import { PrivateRoute } from "./components/PrivateRoute";
+import { Toaster } from "react-hot-toast";
 
 const HomePage = lazy(() => import("./pages/HomePage/Home"));
 const ContactPage = lazy(() => import("./pages/ContactPage/Contact"));

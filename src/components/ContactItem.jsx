@@ -11,7 +11,7 @@ const Contact = ({ contact, onDelete }) => {
           <FontAwesomeIcon icon={faUser} /> {contact.name}
         </span>
         <span>
-          <FontAwesomeIcon icon={faPhone} /> {contact.phone}
+          <FontAwesomeIcon icon={faPhone} /> {contact.number}
         </span>
       </div>
       <button onClick={onDelete} className={styles.deleteButton}>
